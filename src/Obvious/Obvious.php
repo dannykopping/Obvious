@@ -80,13 +80,11 @@
 
         public function tables()
         {
-            $schema = Container::get(DI::SCHEMA_QUERY);
-            return $schema->listTables();
+            return Schema::listTables();
         }
 
         public function views()
         {
-            $schema = Container::get(DI::SCHEMA_QUERY);
-            return $schema->listViews();
+            return Schema::listViews();
         }
     }

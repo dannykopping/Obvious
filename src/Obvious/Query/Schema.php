@@ -7,6 +7,17 @@
 
     class Schema
     {
+        const TABLE = 'BASE TABLE';
+        const VIEW  = 'VIEW';
+
+        /**
+         * @return Schema
+         */
+        private static function instance()
+        {
+            return Container::get(DI::SCHEMA_QUERY);
+        }
+
         /**
          * @return \PDO
          */
@@ -15,17 +26,17 @@
             return Container::get(DI::PDO_CONNECTION);
         }
 
-        public function listTables()
+        public static function listTables()
         {
-            return $this->getTablesOfType();
+            return self::instance()->getTablesOfType(self::TABLE);
         }
 
-        public function listViews()
+        public static function listViews()
         {
-            return $this->getTablesOfType('VIEW');
+            return self::instance()->getTablesOfType(self::VIEW);
         }
 
-        private function getTablesOfType($type = 'BASE TABLE')
+        private function getTablesOfType($type)
         {
             $conn   = $this->getConnection();
             $config = Container::get('config');
