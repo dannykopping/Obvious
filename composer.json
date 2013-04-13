@@ -11,5 +11,10 @@
         "psr-0": {
             "Obvious": "src"
         }
+    },
+    "require": {
+        "symfony/event-dispatcher": ">=v2.2.0",
+        "dannykopping/fig": "dev-master",
+        "pimple/pimple": "v1.0.2"
     }
 }
