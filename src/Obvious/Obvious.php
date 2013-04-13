@@ -2,6 +2,7 @@
     namespace Obvious;
 
     use Obvious\Event\ConnectionEvent;
+    use Obvious\Query\Schema;
     use PDO;
     use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -40,6 +41,10 @@
             Container::set(DI::CONNECTION_EVENT, function () {
                 return new ConnectionEvent();
             });
+
+            Container::set(DI::SCHEMA_QUERY, function() {
+                return new Schema();
+            });
         }
 
         /**
@@ -71,5 +76,17 @@
             $this->getEventDispatcher()->addListener(ConnectionEvent::CONNECTION_ERROR, function ($e) {
                 print_r($e);
             });
+        }
+
+        public function tables()
+        {
+            $schema = Container::get(DI::SCHEMA_QUERY);
+            return $schema->listTables();
+        }
+
+        public function views()
+        {
+            $schema = Container::get(DI::SCHEMA_QUERY);
+            return $schema->listViews();
         }
     }

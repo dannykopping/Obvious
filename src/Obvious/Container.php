@@ -49,4 +49,5 @@
         const PDO_CONNECTION = 'pdo.connection';
         const EVENT_DISPATCHER = 'event-dispatcher';
         const CONNECTION_EVENT = 'connection-event';
+        const SCHEMA_QUERY = 'schema-query';
     }

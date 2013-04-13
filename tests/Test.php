@@ -39,4 +39,16 @@
             $obvious = $this->getObvious();
             $this->assertInstanceOf('\\PDO', $obvious->connect());
         }
+
+        public function testListTables()
+        {
+            $obvious = $this->getObvious();
+            $this->assertCount(5, $obvious->tables());
+        }
+
+        public function testListViews()
+        {
+            $obvious = $this->getObvious();
+            $this->assertCount(1, $obvious->views());
+        }
     }
