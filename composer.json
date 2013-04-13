@@ -1,0 +1,15 @@
+{
+    "name": "dannykopping/obvious",
+    "description": "Obviously...",
+    "authors": [
+        {
+            "name": "Danny Kopping",
+            "email": "dannykopping@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Obvious": "src"
+        }
+    }
+}
