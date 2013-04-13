@@ -4,6 +4,7 @@
     use Obvious\Container;
     use Obvious\DI;
     use Obvious\Obvious;
+    use Obvious\Query\Schema;
 
     class Test extends PHPUnit_Framework_TestCase
     {
@@ -50,5 +51,11 @@
         {
             $obvious = $this->getObvious();
             $this->assertCount(1, $obvious->views());
+        }
+
+        public function testSchemaName()
+        {
+            $obvious = $this->getObvious();
+            $this->assertEquals('ormtest', Schema::name());
         }
     }

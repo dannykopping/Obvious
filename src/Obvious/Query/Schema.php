@@ -26,6 +26,12 @@
             return Container::get(DI::PDO_CONNECTION);
         }
 
+        public static function name()
+        {
+            $config = Container::get('config');
+            return $config['schema'];
+        }
+
         public static function listTables()
         {
             return self::instance()->getTablesOfType(self::TABLE);
