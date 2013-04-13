@@ -1,6 +1,7 @@
 <?php
     namespace Obvious\Query;
 
+    use Doctrine\DBAL\Driver\Connection;
     use Obvious\Container;
     use Obvious\DI;
     use PDO;
@@ -19,46 +20,28 @@
         }
 
         /**
-         * @return \PDO
+         * @return \Doctrine\DBAL\Connection
          */
         private function getConnection()
         {
-            return Container::get(DI::PDO_CONNECTION);
+            return Container::get(DI::DOCTRINE_CONNECTION);
         }
 
-        public static function name()
+        public static function listDatabases()
         {
-            $config = Container::get('config');
-            return $config['schema'];
+            $conn = self::instance()->getConnection();
+            return $conn->getSchemaManager()->listDatabases();
         }
 
         public static function listTables()
         {
-            return self::instance()->getTablesOfType(self::TABLE);
+            $conn = self::instance()->getConnection();
+            return $conn->getSchemaManager()->listTables();
         }
 
         public static function listViews()
         {
-            return self::instance()->getTablesOfType(self::VIEW);
-        }
-
-        private function getTablesOfType($type)
-        {
-            $conn   = $this->getConnection();
-            $config = Container::get('config');
-
-            $schema = $config['schema'];
-
-            $results = $conn->query("SHOW FULL TABLES IN `{$schema}` WHERE TABLE_TYPE = '{$type}'", PDO::FETCH_NUM);
-
-            if (empty($results))
-                return array();
-
-            $tables = array();
-            foreach ($results as $table) {
-                $tables[] = $table[0];
-            }
-
-            return $tables;
+            $conn = self::instance()->getConnection();
+            return $conn->getSchemaManager()->listViews();
         }
     }

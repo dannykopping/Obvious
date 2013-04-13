@@ -1,5 +1,6 @@
 <?php
     use Obvious\Container;
+    use Obvious\DI;
     use Obvious\Obvious;
 
     require_once "vendor/autoload.php";

@@ -1,6 +1,8 @@
 <?php
     namespace Obvious;
 
+    use Doctrine\DBAL\Configuration;
+    use Doctrine\DBAL\DriverManager;
     use Obvious\Event\ConnectionEvent;
     use Obvious\Query\Schema;
     use PDO;
@@ -34,6 +36,18 @@
                 return new Connection($hostname, $schema, $username, $password);
             });
 
+            Container::set(DI::DOCTRINE_CONNECTION, function ($app) {
+                $config           = new Configuration();
+                $connectionParams = array(
+                    'dbname'   => $app[DI::CONFIG]['schema'],
+                    'user'     => $app[DI::CONFIG]['username'],
+                    'password' => $app[DI::CONFIG]['password'],
+                    'host'     => $app[DI::CONFIG]['hostname'],
+                    'driver'   => 'pdo_mysql',
+                );
+                return DriverManager::getConnection($connectionParams, $config);
+            });
+
             Container::set(DI::EVENT_DISPATCHER, function () {
                 return new EventDispatcher();
             }, true);
@@ -42,7 +56,7 @@
                 return new ConnectionEvent();
             });
 
-            Container::set(DI::SCHEMA_QUERY, function() {
+            Container::set(DI::SCHEMA_QUERY, function () {
                 return new Schema();
             });
         }
@@ -52,7 +66,7 @@
          */
         public function connect()
         {
-            return $this->getConnection()->connect();
+            return $this->getConnection();
         }
 
         /**
@@ -60,7 +74,7 @@
          */
         private function getConnection()
         {
-            return Container::get(DI::CONNECTION);
+            return Container::get(DI::DOCTRINE_CONNECTION);
         }
 
         /**
@@ -76,15 +90,5 @@
             $this->getEventDispatcher()->addListener(ConnectionEvent::CONNECTION_ERROR, function ($e) {
                 print_r($e);
             });
-        }
-
-        public function tables()
-        {
-            return Schema::listTables();
-        }
-
-        public function views()
-        {
-            return Schema::listViews();
         }
     }

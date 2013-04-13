@@ -15,6 +15,7 @@
     "require": {
         "symfony/event-dispatcher": ">=v2.2.0",
         "dannykopping/fig": "dev-master",
-        "pimple/pimple": "v1.0.2"
+        "pimple/pimple": "v1.0.2",
+        "doctrine/dbal": ">=v2.3.0"
     }
 }

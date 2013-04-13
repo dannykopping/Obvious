@@ -50,4 +50,5 @@
         const EVENT_DISPATCHER = 'event-dispatcher';
         const CONNECTION_EVENT = 'connection-event';
         const SCHEMA_QUERY = 'schema-query';
+        const DOCTRINE_CONNECTION = 'doctrine-connection';
     }
